@@ -3,14 +3,16 @@ import { View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Signup from '../Component/signup';
 import Login from '../Component/login';
+import LoginDemo from '../Component/login';
+import SignupDemo from '../Component/signup';
 import Home from '../Component/home';
 const AuthStack = StackNavigator(
   {
     SignUp: {
-      screen: Signup,
+      screen: SignupDemo,
     },
     LogIn: {
-      screen: Login,
+      screen: LoginDemo,
     },
     Home:{
       screen: Home
@@ -20,6 +22,13 @@ const AuthStack = StackNavigator(
     initialRouteName: 'LogIn',
   }
 );
+
+
+export default class App extends React.Component {
+  render() {
+    return <AuthStack />;
+  }
+}
 
 
 // const prevGetStateForActionHomeStack = AuthStack.router.getStateForAction;
@@ -39,8 +48,8 @@ const AuthStack = StackNavigator(
 //     }
 // }
 
-export default class App extends React.Component {
-  render() {
-    return <AuthStack />;
-  }
-}
+// export default class App extends React.Component {
+//   render() {
+//     return <AuthStack />;
+//   }
+// }

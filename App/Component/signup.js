@@ -9,7 +9,7 @@ import { Platform, StyleSheet, View, Button, TextInput, TouchableOpacity } from 
 import { Container, Header, Content, Badge, Text, Icon, Form, Item, Input, Label } from 'native-base';
 import firebase from 'react-native-firebase';
 
-export default class Signup extends Component {
+export default class SignupDemo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,6 @@ export default class Signup extends Component {
     static navigationOptions = {
         title: 'SignUp',
         headerTitleStyle: {
-            // justifyContent: "center", alignSelf: "center", width: "15%"
             flex: 1,
             alignSelf: 'center',
             textAlign: 'center'
@@ -47,28 +46,8 @@ export default class Signup extends Component {
             })
     }
     render() {
-        console.log(this.state.name)
-        let { navigation } = this.props;
-        console.log(navigation);
         return (
             <View style={styles.container}>
-                {/* <TextInput
-                    value={this.state.name}
-                    placeholder="Username"
-                    onChangeText={(value => this.setState({ name: value }))} />
-                <TextInput
-                    value={this.state.email}
-                    placeholder="Email"
-                    onChangeText={(value => this.setState({ email: value }))} />
-                <TextInput
-                    placeholder="Password"
-                    value={this.state.password}
-                    secureTextEntry={true}
-                    onChangeText={(value => this.setState({ password: value }))} />
-                <Text>{`\n`}</Text>
-                <Button title='Signup' onPress={this._signUp} />
-                <Button title="Login" onPress={() => this.props.navigation.navigate('LogIn')} /> */}
-
                 <View style={styles.inputWrapper}>
                     <Item style={styles.input}>
                         <Icon name="ios-person" style={{ color: '#000' }} />
@@ -94,15 +73,15 @@ export default class Signup extends Component {
                     </View>
                 </View>
             </View>
-        );
+        )
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-around',
-        // alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
     welcome: {
@@ -110,13 +89,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
     },
-    input: {
-        // marginLeft: 20,
-        // marginRight: 20,
+    input:{ 
         marginBottom: 20,
     },
-    inputWrapper:{
+    inputWrapper: {
         padding: 20
     }
-    
+
 });

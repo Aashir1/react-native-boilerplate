@@ -10,15 +10,14 @@ import { Container, Header, Content, Badge, Text, Icon, Form, Item, Input, Label
 import firebase from 'react-native-firebase';
 import { NavigationActions } from 'react-navigation';
 
-
-export default class Signup extends Component {
+export default class LoginDemo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
             password: ''
         }
-        console.log(this.props.navigation);        
+        console.log(this.props.navigation);
     }
     static navigationOptions = {
         title: 'Login',
@@ -47,8 +46,8 @@ export default class Signup extends Component {
         let { navigation } = this.props;
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(user => {
-                    console.log(user);
-                    navigation.navigate('Home');
+                console.log(user);
+                navigation.navigate('Home');
             })
             .catch((error) => {
                 // alert(error.message);
@@ -57,45 +56,32 @@ export default class Signup extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View>
+                <View style={styles.inputWrapper}>
                     <Item style={styles.input}>
                         <Icon name="ios-mail" style={{ color: '#000' }} />
                         <Input placeholder="Email" onChangeText={(value => this.setState({ email: value }))} />
                     </Item>
                     <Item last style={styles.input}>
                         <Icon name="ios-unlock" style={{ color: '#000' }} />
-                        <Input placeholder="Password" 
-                        secureTextEntry 
-                        onChangeText={(value => this.setState({ password: value }))}
-                        onSubmitEditing={this._login}
+                        <Input placeholder="Password"
+                            secureTextEntry
+                            onChangeText={(value => this.setState({ password: value }))}
+                            onSubmitEditing={this._login}
                         />
                     </Item>
                     <View style={{ flexDirection: 'row' }}>
-                    <Text>
-                        Don't have an Account ?{' '}
-                    </Text>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
                         <Text>
-                            SignUp
+                            Don't have an Account ?{' '}
                         </Text>
-                    </TouchableOpacity>
-                </View>
-                    {/* <TextInput
-                        value={this.state.email}
-                        placeholder="Email"
-                        onChangeText={(value => this.setState({ email: value }))} />
-                    <TextInput
-                        placeholder="Password"
-                        value={this.state.password}
-                        secureTextEntry={true}
-                        onChangeText={(value => this.setState({ password: value }))} />
-                    <Text>{`\n`}</Text>
-                    <Button title='Login' onPress={this._login} />
-                    <Button title='Signup' onPress={() => this.props.navigation.navigate('SignUp')} /> */}
-
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}>
+                            <Text>
+                                SignUp
+                        </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
-        );
+        )
     }
 }
 
@@ -111,14 +97,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
-    input: {
-        marginLeft: 20,
-        marginRight: 20,
+    input:{ 
         marginBottom: 20,
     },
+    inputWrapper: {
+        padding: 20
+    }
+
 });
