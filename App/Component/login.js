@@ -5,17 +5,20 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, View, TextInput, Button, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Container, Header, Content, Badge, Text, Icon, Form, Item, Input, Label } from 'native-base';
+import AuthActions from '../store/action/auth';
 import firebase from 'react-native-firebase';
 import { NavigationActions } from 'react-navigation';
+import {connect} from 'react-redux';
 
-export default class LoginDemo extends Component {
+class LoginDemo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            loader: false,
         }
         console.log(this.props.navigation);
     }
@@ -29,29 +32,21 @@ export default class LoginDemo extends Component {
         headerRight: (<View></View>)
     };
 
-    // replaceScreen = () => {
-    //     // const { locations, position } = this.props.navigation.state.params;
-    //     console.log(this.props.navigation);
-    //     // console.log(locations, position);
-    //     this.props.navigation.dispatch({
-    //         key: `Home`,
-    //         type: 'ReplaceCurrentScreen',
-    //         routeName: `Home`,
-    //         // params: { locations, position },
-    //     });
-    // };
+    replaceScreen = (route) => {
+        // const { locations, position } = this.props.navigation.state.params;
+        this.props.navigation.dispatch({
+            type: 'ReplaceCurrentScreen',
+            key: `${route}`,
+            routeName: `${route}`,
+            // params: { locations, position },
+        });
+    };
 
 
     _login = () => {
-        let { navigation } = this.props;
-        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(user => {
-                console.log(user);
-                navigation.navigate('Home');
-            })
-            .catch((error) => {
-                // alert(error.message);
-            })
+        let { navigate } = this.props.navigation;
+        console.log(navigate);
+        this.props.login(this.state.email, this.state.password, this.replaceScreen);
     }
     render() {
         return (
@@ -79,6 +74,14 @@ export default class LoginDemo extends Component {
                         </Text>
                         </TouchableOpacity>
                     </View>
+                    {
+                        this.props.loader ?
+                            <View style={{ flex: 1, paddingTop: 20 }}>
+                                <ActivityIndicator />
+                            </View>
+                            :
+                            null
+                    }
                 </View>
             </View>
         )
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10,
     },
-    input:{ 
+    input: {
         marginBottom: 20,
     },
     inputWrapper: {
@@ -105,3 +108,16 @@ const styles = StyleSheet.create({
     }
 
 });
+
+function mapStateToProps(state){
+    console.log(state)
+    return{
+        loader: state.authReducer.progressBar,
+    }
+}
+function mapDispatchToProps(dispatch){
+    return{
+        login: (email, password, navigate)=> dispatch(AuthActions.login(email, password, navigate))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(LoginDemo);

@@ -44,6 +44,30 @@ export default class Home extends Component {
     }
 }
 
+export class Tab1 extends React.Component{
+    render(){
+        return(
+            <View>
+                <Text>
+                    Tab1
+                </Text>
+            </View>
+        )
+    }
+}
+
+export class Tab2 extends React.Component{
+    render(){
+        return(
+            <View>
+                <Text>
+                    Tab2
+                </Text>
+            </View>
+        )
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
